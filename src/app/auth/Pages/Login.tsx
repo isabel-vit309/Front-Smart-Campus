@@ -3,9 +3,11 @@ import Logo from "../Assets/Logo.svg";
 import { useState } from "react";
 import { Pressable } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Login() {
   const [perfil, setPerfil] = useState("estudante");
+  const navigation = useNavigation<any>();
 
   return (
     <View style={styles.container}>
@@ -110,10 +112,13 @@ export default function Login() {
             </View>
           </View>
 
-          <Pressable style={styles.loginButton}>
-            <Ionicons name="log-in-outline" size={24} color="#FFFFFF" />
-            <Text style={styles.loginButtonText}>Entrar</Text>
-          </Pressable>
+          <Pressable
+        style={styles.loginButton}
+        onPress={() => navigation.navigate("Student")}
+      >
+        <Ionicons name="log-in-outline" size={24} color="#FFFFFF" />
+        <Text style={styles.loginButtonText}>Entrar</Text>
+      </Pressable>
         </View>
       </View>
     </View>
