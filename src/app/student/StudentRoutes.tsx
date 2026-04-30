@@ -1,46 +1,43 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
+import Home from "./Pages/Home";
+import Schedule from "./Pages/Schedule";
+import History from "./Pages/History";
 
 const Tab = createBottomTabNavigator();
 
-function Home() {
-  return (
-    <View style={styles.container}>
-      <Text>Início do Aluno</Text>
-    </View>
-  );
-}
-
-function Schedule() {
-  return (
-    <View style={styles.container}>
-      <Text>Horários</Text>
-    </View>
-  );
-}
-
-function Absences() {
-  return (
-    <View style={styles.container}>
-      <Text>Faltas</Text>
-    </View>
-  );
-}
-
 export default function StudentRoutes() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: "#041936",
+          borderTopWidth: 0,
+        },
+
+        tabBarActiveTintColor: "#2F6BFF",
+        tabBarInactiveTintColor: "#FFFFFF",
+
+        tabBarIcon: ({ color, size }) => {
+          let iconName: any;
+
+          if (route.name === "Início") {
+            iconName = "home";
+          } else if (route.name === "Horários") {
+            iconName = "calendar";
+          } else if (route.name === "Histórico") {
+            iconName = "time";
+          }
+
+          return <Ionicons name={iconName} size={20} color={color} />;
+        },
+      })}
+    >
       <Tab.Screen name="Início" component={Home} />
       <Tab.Screen name="Horários" component={Schedule} />
-      <Tab.Screen name="Faltas" component={Absences} />
+      <Tab.Screen name="Histórico" component={History} />
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
