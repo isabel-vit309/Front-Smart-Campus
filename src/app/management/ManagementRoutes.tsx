@@ -4,6 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import Dashboard from "./Pages/Dashboard";
 import ClassList from "./Pages/ClassList";
 import ListStudents from "./Pages/ListStudents";
+import RegisterClass from "./Pages/RegisterClass"
+import RegisterStudent from "./Pages/RegisterStudent"
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +31,7 @@ export default function ManagementRoutes() {
             iconName = "home";
           } else if (route.name === "NovoAluno") {
             iconName = "person-add";
-          } else if (route.name === "RegistroAulas") {
+          } else if (route.name === "RegisterClass") {
             iconName = "clipboard";
           } else if (route.name === "ListStudents") {
             iconName = "people";
@@ -50,16 +52,16 @@ export default function ManagementRoutes() {
       />
 
       <Tab.Screen
-        name="NovoAluno"
-        component={ListStudents}
+        name="RegisterStudent"
+        component={RegisterStudent}
         options={{
           title: "Novo Aluno",
         }}
       />
 
       <Tab.Screen
-        name="RegistroAulas"
-        component={ListStudents}
+        name="RegisterClass"
+        component={RegisterClass}
         options={{
           title: "Registro",
         }}

@@ -15,13 +15,14 @@ export default function StudentRoutes() {
         tabBarStyle: {
           backgroundColor: "#041936",
           borderTopWidth: 0,
+          height: 70,
+          paddingBottom: 8,
+          paddingTop: 8,
         },
-
         tabBarActiveTintColor: "#2F6BFF",
         tabBarInactiveTintColor: "#FFFFFF",
-
         tabBarIcon: ({ color, size }) => {
-          let iconName: any;
+          let iconName: any = "home";
 
           if (route.name === "Início") {
             iconName = "home";
@@ -29,9 +30,13 @@ export default function StudentRoutes() {
             iconName = "calendar";
           } else if (route.name === "Histórico") {
             iconName = "time";
-          }
-
-          return <Ionicons name={iconName} size={20} color={color} />;
+          } 
+          return <Ionicons name={iconName} size={22} color={color} />;
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "500",
+          marginBottom: 4,
         },
       })}
     >

@@ -33,7 +33,7 @@ export default function Dashboard() {
         <View style={styles.grid}>
           <Pressable
             style={styles.quickButton}
-            onPress={() => navigation.navigate("NovoAluno")}
+            onPress={() => navigation.navigate("RegisterStudent")}
           >
             <View style={styles.iconBox}>
               <Ionicons name="person-add-outline" size={26} color="#2F6BFF" />
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
           <Pressable
             style={styles.quickButton}
-            onPress={() => navigation.navigate("RegistroAulas")}
+            onPress={() => navigation.navigate("RegisterClass")}
           >
             <View style={styles.iconBox}>
               <Ionicons name="clipboard-outline" size={26} color="#2F6BFF" />
