@@ -114,7 +114,7 @@ export default function Login() {
 
           <Pressable
         style={styles.loginButton}
-        onPress={() => navigation.navigate("Student")}
+        onPress={() => navigation.navigate("Management")}
       >
         <Ionicons name="log-in-outline" size={24} color="#FFFFFF" />
         <Text style={styles.loginButtonText}>Entrar</Text>

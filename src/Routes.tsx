@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "./app/auth/Pages/Login";
 import StudentRoutes from "./app/student/StudentRoutes";
-import Dashboard from "./app/management/Pages/Dashboard";
+import ManagementRoutes from "./app/management/ManagementRoutes";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +23,7 @@ export default function Routes() {
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Student" component={StudentRoutes} />
-      <Stack.Screen name="Management" component={Dashboard} />
+      <Stack.Screen name="Management" component={ManagementRoutes} />
     </Stack.Navigator>
   );
 }

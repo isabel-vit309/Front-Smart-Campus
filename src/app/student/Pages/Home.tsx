@@ -13,7 +13,7 @@ export default function Home() {
       <View style={styles.textContainer}>
         <Text style={styles.title}>Olá, Aluno!</Text>
         <Text style={styles.subtitle}>Bem-vindo(a) de volta.</Text>
-        <Logo width={170} height={100} style={{ marginTop: 4 }} />
+        <Logo width={200} height={140} style={{ marginTop: -15}} />
       </View>
 
       <View style={styles.card}>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
   title: {
     color: "#FFF",
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: "bold",
   },
 
@@ -99,10 +99,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#051e3e",
     width: "92%",
-    marginTop: -8,
+    marginTop: 2,
     borderRadius: 12,
     borderWidth: 1,
     padding: 14,
+    borderColor: "#0B3D91",
+
   },
 
   cardTwo: {
@@ -112,6 +114,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     padding: 14,
+    borderColor: "#0B3D91",
+
   },
 
   titleCard: {
@@ -180,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   sheduleCard: {
-  backgroundColor: "#0F213F",
+  backgroundColor: "#112e61",
   width: "100%",
   marginTop: 15,
   borderRadius: 12,
@@ -234,7 +238,7 @@ badge: {
 },
 
 badgeText: {
-  color: "#2F6BFF",
+  color: "#80B3F8",
   fontSize: 11,
   fontWeight: "bold",
 },

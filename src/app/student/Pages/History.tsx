@@ -79,13 +79,13 @@ const HistoryCard = ({ item }: { item: HistoryItem }) => {
   const isPresent = item.status === "present";
 
   const statusIcon = isPresent
-    ? require("../../auth/Assets/check-icon.png")
-    : require("../../auth/Assets/uncheck-icon.png");
+    const iconName = isPresent ? "checkmark-circle" : "close-circle";
+    const iconColor = isPresent ? "#4CAF50" : "#FF4C4C";
 
   return (
     <View style={styles.historyCard}>
       <View style={styles.historyIconBox}>
-        <Image source={statusIcon} style={styles.statusIcon} />
+        <Ionicons name={iconName} size={24} color={iconColor} />
       </View>
 
       <View style={styles.historyInfo}>
@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    marginTop: 10,
     marginHorizontal: 20,
     marginBottom: 24,
   },

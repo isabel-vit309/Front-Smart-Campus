@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    marginTop: 10,
     marginHorizontal: 20,
     marginBottom: 24,
   },
