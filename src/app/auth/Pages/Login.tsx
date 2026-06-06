@@ -1,13 +1,83 @@
-import { View, Image, Text, Button, TextInput, StyleSheet } from "react-native";
+import { View, Image, Text, TextInput, StyleSheet, Pressable, Alert } from "react-native";
 import Logo from "../Assets/Logo.svg";
 import { useState } from "react";
-import { Pressable } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
 export default function Login() {
   const [perfil, setPerfil] = useState("estudante");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation<any>();
+
+  async function handleLogin() {
+  try {
+    if (!email || !password) {
+      Alert.alert("Atenção", "Preencha e-mail e senha.");
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      let errorMessage = "Login inválido";
+
+      if (typeof data.message === "string") {
+        errorMessage = data.message;
+      } else if (typeof data.error === "string") {
+        errorMessage = data.error;
+      } else if (data.error && typeof data.error === "object") {
+        errorMessage = Object.values(data.error).flat().join("\n");
+      }
+
+      Alert.alert("Erro ao entrar", errorMessage);
+      return;
+    }
+
+    const { token, role } = data;
+
+    console.log("TOKEN:", token);
+    console.log("ROLE:", role);
+
+    if (role === "STUDENT") {
+      navigation.navigate("Student");
+      return;
+    }
+
+    if (role === "ADMIN") {
+      navigation.navigate("Management");
+      return;
+    }
+
+    Alert.alert(
+      "Acesso negado",
+      "Esse perfil não possui acesso ao aplicativo."
+    );
+  } catch (error) {
+    console.log(error);
+    Alert.alert("Erro", "Não foi possível conectar ao servidor.");
+  } finally {
+    setLoading(false);
+  }
+}
 
   return (
     <View style={styles.container}>
@@ -26,9 +96,7 @@ export default function Login() {
         </Text>
 
         <View style={styles.card}>
-          <Text style={styles.titleCard}>
-            Escolha seu perfil de acesso
-          </Text>
+          <Text style={styles.titleCard}>Escolha seu perfil de acesso</Text>
 
           <View style={styles.toggleContainer}>
             <Pressable
@@ -43,6 +111,7 @@ export default function Login() {
                 size={22}
                 color={perfil === "estudante" ? "#1E7BFF" : "#9CA8B8"}
               />
+
               <Text
                 style={[
                   styles.toggleText,
@@ -65,6 +134,7 @@ export default function Login() {
                 size={24}
                 color={perfil === "gestao" ? "#1E7BFF" : "#9CA8B8"}
               />
+
               <Text
                 style={[
                   styles.toggleText,
@@ -87,6 +157,10 @@ export default function Login() {
                   style={styles.input}
                   placeholder="seu.email@exemplo.com"
                   placeholderTextColor="#9CA8B8"
+                  value={email}
+                  onChangeText={setEmail}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
                 />
               </View>
             </View>
@@ -107,18 +181,28 @@ export default function Login() {
                   style={styles.input}
                   placeholder="**********"
                   placeholderTextColor="#9CA8B8"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
                 />
               </View>
             </View>
           </View>
 
           <Pressable
-        style={styles.loginButton}
-        onPress={() => navigation.navigate("Management")}
-      >
-        <Ionicons name="log-in-outline" size={24} color="#FFFFFF" />
-        <Text style={styles.loginButtonText}>Entrar</Text>
-      </Pressable>
+            style={[
+              styles.loginButton,
+              loading && { opacity: 0.7 },
+            ]}
+            onPress={handleLogin}
+            disabled={loading}
+          >
+            <Ionicons name="log-in-outline" size={24} color="#FFFFFF" />
+
+            <Text style={styles.loginButtonText}>
+              {loading ? "Entrando..." : "Entrar"}
+            </Text>
+          </Pressable>
         </View>
       </View>
     </View>
