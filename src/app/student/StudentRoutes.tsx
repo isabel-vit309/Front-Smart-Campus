@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Home from "./Pages/Home";
 import Schedule from "./Pages/Schedule";
@@ -8,6 +9,8 @@ import History from "./Pages/History";
 const Tab = createBottomTabNavigator();
 
 export default function StudentRoutes() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -15,8 +18,8 @@ export default function StudentRoutes() {
         tabBarStyle: {
           backgroundColor: "#041936",
           borderTopWidth: 0,
-          height: 70,
-          paddingBottom: 8,
+          height: 70 + insets.bottom,
+          paddingBottom: insets.bottom > 0 ? insets.bottom : 8,
           paddingTop: 8,
         },
         tabBarActiveTintColor: "#2F6BFF",
@@ -30,7 +33,7 @@ export default function StudentRoutes() {
             iconName = "calendar";
           } else if (route.name === "Histórico") {
             iconName = "time";
-          } 
+          }
           return <Ionicons name={iconName} size={22} color={color} />;
         },
         tabBarLabelStyle: {

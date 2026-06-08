@@ -31,7 +31,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   async function handleLogin() {
     if (!email.trim() || !password) {
@@ -42,30 +43,25 @@ export default function Login() {
     setLoading(true);
     try {
       const role = await signIn(email.trim().toLowerCase(), password);
-      console.log("✅ Login bem-sucedido! Role:", role, "| Perfil selecionado:", perfil);
 
-      // Validação: perfil selecionado deve corresponder ao role da conta
       if (perfil === "estudante" && role !== "STUDENT") {
         Alert.alert(
           "Perfil incorreto",
-          `Esta conta é de ${role === "ADMIN" ? "administrador" : "professor"}.\nSelecione "Gestão" para acessar.`
+          `Esta conta é de ${role === "ADMIN" ? "administrador" : "professor"}.\nSelecione "Gestão" para acessar.`,
         );
         return;
       }
       if (perfil === "gestao" && role === "STUDENT") {
         Alert.alert(
           "Perfil incorreto",
-          "Esta conta é de estudante.\nSelecione \"Estudante\" para acessar."
+          'Esta conta é de estudante.\nSelecione "Estudante" para acessar.',
         );
         return;
       }
 
-      // Navega de forma definitiva — substitui toda a pilha de navegação
       const target = role === "STUDENT" ? "Student" : "Management";
       navigation.reset({ index: 0, routes: [{ name: target }] });
     } catch (err: any) {
-      console.log("❌ Erro no login:", err?.message, "| status:", err?.response?.status);
-
       let msg: string;
       if (!err?.response) {
         msg = `Servidor inacessível.\n\nURL: ${err?.config?.url ?? "?"}\nDetalhe: ${err?.message}`;
@@ -84,7 +80,7 @@ export default function Login() {
   return (
     <KeyboardAvoidingView
       style={styles.root}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <Image
         source={require("../Assets/SenacBackground.png")}
@@ -106,11 +102,12 @@ export default function Login() {
 
         <View style={styles.card}>
           <Text style={styles.titleCard}>Escolha seu perfil de acesso</Text>
-
-          {/* Toggle estudante / gestão */}
           <View style={styles.toggleContainer}>
             <Pressable
-              style={[styles.toggleButton, perfil === "estudante" && styles.activeButton]}
+              style={[
+                styles.toggleButton,
+                perfil === "estudante" && styles.activeButton,
+              ]}
               onPress={() => setPerfil("estudante")}
             >
               <MaterialCommunityIcons
@@ -118,13 +115,21 @@ export default function Login() {
                 size={22}
                 color={perfil === "estudante" ? "#1E7BFF" : "#9CA8B8"}
               />
-              <Text style={[styles.toggleText, perfil === "estudante" && styles.activeText]}>
+              <Text
+                style={[
+                  styles.toggleText,
+                  perfil === "estudante" && styles.activeText,
+                ]}
+              >
                 Estudante
               </Text>
             </Pressable>
 
             <Pressable
-              style={[styles.toggleButton, perfil === "gestao" && styles.activeButton]}
+              style={[
+                styles.toggleButton,
+                perfil === "gestao" && styles.activeButton,
+              ]}
               onPress={() => setPerfil("gestao")}
             >
               <Ionicons
@@ -132,13 +137,16 @@ export default function Login() {
                 size={24}
                 color={perfil === "gestao" ? "#1E7BFF" : "#9CA8B8"}
               />
-              <Text style={[styles.toggleText, perfil === "gestao" && styles.activeText]}>
+              <Text
+                style={[
+                  styles.toggleText,
+                  perfil === "gestao" && styles.activeText,
+                ]}
+              >
                 Gestão
               </Text>
             </Pressable>
           </View>
-
-          {/* E-mail */}
           <View style={styles.fieldWrapper}>
             <Text style={styles.label}>E-mail</Text>
             <View style={styles.inputContainer}>
@@ -156,8 +164,6 @@ export default function Login() {
               />
             </View>
           </View>
-
-          {/* Senha */}
           <View style={styles.fieldWrapper}>
             <Text style={styles.label}>Senha</Text>
             <View style={styles.inputContainer}>
@@ -174,8 +180,6 @@ export default function Login() {
               />
             </View>
           </View>
-
-          {/* Botão */}
           <TouchableOpacity
             style={[styles.loginButton, loading && { opacity: 0.6 }]}
             onPress={handleLogin}
